@@ -1,0 +1,1 @@
+web : ginicorn codestar.wsgi
