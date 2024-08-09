@@ -18,5 +18,12 @@ class Post(models.Model):
     excerpt = models.TextField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name="blog_comment", on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name="comment_author", on_delete=models.CASCADE)
+    body = models.TextField(blank=True)
+    approved = models.BooleanField(default=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+
 
 
