@@ -25,7 +25,7 @@ class Post(models.Model):
         return f"{self.title} by {self.author}"  
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, related_name="blog_comment", on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name="comment_author", on_delete=models.CASCADE)
     body = models.TextField(blank=True)
     approved = models.BooleanField(default=False)
