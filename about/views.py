@@ -1,15 +1,24 @@
 from django.shortcuts import render
+from django.contrib import messages
 from .models import About
 from .forms import CollaborateForm
-from django.contrib import messages
 
 # Create your views here.
 
 def about_me(request):
     """ 
-    about page renders
+    renders the most recent information on the website author
+    and allow user collaboration request
+    display an individual instance of :model:'about.ABout'
+    **Context**
+    ''about''
+        the most recent instance of model:'about.About
+        collaborate_form''
+           an instance of :form: 'about.collaborateForm'.
+        **template**
+        :template: 'about/about.html'
     """
-
+    about = About.objects.all().order_by('-updated_on').first()
     if request.method == "POST":
         collaborate_form = CollaborateForm(data=request.POST)
         if collaborate_form.is_valid():
@@ -18,7 +27,7 @@ def about_me(request):
             messages.SUCCESS, "Collaboration request received! I endeavor to respond within 2 working days."
             )
     
-    about = About.objects.all().order_by('-updated_on').first()
+    
     collaborate_form = CollaborateForm()
 
     return render(
